@@ -28,6 +28,11 @@ pub const fn clamp_safe(x: f64, a: f64, b: f64) -> f64 {
     let (lower, upper) = if a <= b { (a, b) } else { (b, a) };
     clamp(x, lower, upper)
 }
+/// Maps the magnitude of `x` into the range from `0.0` toward `1.0`.
+pub fn exp_map(x: f64, p: f64) -> f64 {
+    let magnitude = x.abs().powf(p);
+    1.0 - (-magnitude).exp()
+}
 /// Linearly interpolates between `a` and `b` using the parameter `t`.
 ///
 /// A value of `0.0` returns `a`, while `1.0` returns `b`.
@@ -69,6 +74,31 @@ pub const fn sign(x: f64) -> f64 {
 /// Rounds `x` to the nearest integer, with halfway values rounded toward positive infinity.
 pub fn round(x: f64) -> f64 {
     (x + 0.5).floor()
+}
+
+/// Returns `1.0` for positive values and `-1.0` otherwise.
+const fn sign_nonzero(x: f64) -> f64 {
+    if x > 0.0 { 1.0 } else { -1.0 }
+}
+
+/// Maps the magnitude of `x` exponentially while preserving its sign.
+pub fn exp_map_signed(x: f64, p: f64) -> f64 {
+    sign_nonzero(x) * exp_map(x, p)
+}
+
+/// Maps the magnitude of `x` exponentially using a fixed exponent of `1.0`.
+pub fn exp_map1(x: f64) -> f64 {
+    1.0 - (-x.abs()).exp()
+}
+
+/// Maps the magnitude of `x` exponentially using a fixed exponent of `1.0`.
+pub fn exp_map1_signed(x: f64) -> f64 {
+    sign_nonzero(x) * exp_map1(x)
+}
+
+/// Maps the magnitude of `x` exponentially using a fixed exponent of `2.0`.
+pub fn exp_map2(x: f64) -> f64 {
+    1.0 - (-(x * x)).exp()
 }
 
 #[cfg(test)]
@@ -137,5 +167,45 @@ mod tests {
         assert_eq!(round(1.5), 2.0);
         assert_eq!(round(-1.4), -1.0);
         assert_eq!(round(-1.5), -1.0);
+    }
+
+    #[test]
+    fn maps_magnitude_exponentially() {
+        assert_eq!(exp_map(0.0, 2.0), 0.0);
+
+        let expected = 1.0 - 1.0 / std::f64::consts::E;
+        assert!((exp_map(1.0, 2.0) - expected).abs() < 1e-12);
+
+        assert_eq!(exp_map(-1.0, 2.0), exp_map(1.0, 2.0));
+    }
+
+    #[test]
+    fn maps_magnitude_exponentially_with_sign() {
+        assert_eq!(exp_map_signed(0.0, 2.0), 0.0);
+        assert!(exp_map_signed(1.0, 2.0) > 0.0);
+        assert!(exp_map_signed(-1.0, 2.0) < 0.0);
+        assert_eq!(exp_map_signed(-1.0, 2.0), -exp_map_signed(1.0, 2.0));
+    }
+
+    #[test]
+    fn maps_magnitude_with_linear_exponent() {
+        assert_eq!(exp_map1(0.0), 0.0);
+        assert_eq!(exp_map1(-1.0), exp_map1(1.0));
+        assert!((exp_map1(1.0) - exp_map(1.0, 1.0)).abs() < 1e-12);
+    }
+
+    #[test]
+    fn maps_with_linear_exponent_and_preserves_sign() {
+        assert_eq!(exp_map1_signed(0.0), 0.0);
+        assert!(exp_map1_signed(1.0) > 0.0);
+        assert!(exp_map1_signed(-1.0) < 0.0);
+        assert_eq!(exp_map1_signed(-1.0), -exp_map1_signed(1.0));
+    }
+
+    #[test]
+    fn maps_magnitude_with_squared_exponent() {
+        assert_eq!(exp_map2(0.0), 0.0);
+        assert_eq!(exp_map2(-1.0), exp_map2(1.0));
+        assert!((exp_map2(1.0) - exp_map(1.0, 2.0)).abs() < 1e-12);
     }
 }
