@@ -91,7 +91,7 @@ pub fn exp_map1(x: f64) -> f64 {
     1.0 - (-x.abs()).exp()
 }
 
-/// Maps the magnitude of `x` exponentially using a fixed exponent of `1.0`.
+/// Maps `x` exponentially using a fixed exponent of `1.0` while preserving its sign.
 pub fn exp_map1_signed(x: f64) -> f64 {
     sign_nonzero(x) * exp_map1(x)
 }
@@ -99,6 +99,16 @@ pub fn exp_map1_signed(x: f64) -> f64 {
 /// Maps the magnitude of `x` exponentially using a fixed exponent of `2.0`.
 pub fn exp_map2(x: f64) -> f64 {
     1.0 - (-(x * x)).exp()
+}
+
+/// Maps `x` exponentially using a fixed exponent of `2.0` while preserving its sign.
+pub fn exp_map2_signed(x: f64) -> f64 {
+    sign_nonzero(x) * exp_map2(x)
+}
+
+/// Raises the magnitude of `x` to `p` while preserving the sign of `x`.
+pub fn pow_signed(x: f64, p: f64) -> f64 {
+    sign_nonzero(x) * x.abs().powf(p)
 }
 
 #[cfg(test)]
@@ -207,5 +217,22 @@ mod tests {
         assert_eq!(exp_map2(0.0), 0.0);
         assert_eq!(exp_map2(-1.0), exp_map2(1.0));
         assert!((exp_map2(1.0) - exp_map(1.0, 2.0)).abs() < 1e-12);
+    }
+
+    #[test]
+    fn maps_with_squared_exponent_and_preserves_sign() {
+        assert_eq!(exp_map2_signed(0.0), 0.0);
+        assert!(exp_map2_signed(1.0) > 0.0);
+        assert!(exp_map2_signed(-1.0) < 0.0);
+        assert_eq!(exp_map2_signed(-1.0), -exp_map2_signed(1.0));
+    }
+
+    #[test]
+    fn raises_magnitude_to_power_and_preserves_sign() {
+        assert_eq!(pow_signed(4.0, 0.5), 2.0);
+        assert_eq!(pow_signed(-4.0, 0.5), -2.0);
+        assert_eq!(pow_signed(2.0, 3.0), 8.0);
+        assert_eq!(pow_signed(-2.0, 3.0), -8.0);
+        assert_eq!(pow_signed(0.0, 2.0), 0.0);
     }
 }
