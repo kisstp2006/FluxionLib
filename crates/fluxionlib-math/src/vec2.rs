@@ -1,6 +1,8 @@
 //! Two-dimensional vector types and operations.
 
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{
+    Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign,
+};
 
 impl<T> Add for Vec2<T>
 where
@@ -69,6 +71,48 @@ where
         Self::new(self.x / rhs.x, self.y / rhs.y)
     }
 }
+
+impl<T> AddAssign for Vec2<T>
+where
+    T: AddAssign,
+{
+    fn add_assign(&mut self, rhs: Self) {
+        self.x += rhs.x;
+        self.y += rhs.y;
+    }
+}
+
+impl<T> SubAssign for Vec2<T>
+where
+    T: SubAssign,
+{
+    fn sub_assign(&mut self, rhs: Self) {
+        self.x -= rhs.x;
+        self.y -= rhs.y;
+    }
+}
+
+impl<T> MulAssign for Vec2<T>
+where
+    T: MulAssign,
+{
+    fn mul_assign(&mut self, rhs: Self) {
+        self.x *= rhs.x;
+        self.y *= rhs.y;
+    }
+}
+
+impl<T> DivAssign for Vec2<T>
+where
+    T: DivAssign,
+{
+    fn div_assign(&mut self, rhs: Self) {
+        self.x /= rhs.x;
+        self.y /= rhs.y;
+    }
+}
+
+
 
 #[cfg(test)]
 mod tests {
