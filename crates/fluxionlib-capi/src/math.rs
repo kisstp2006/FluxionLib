@@ -50,6 +50,48 @@ pub extern "C" fn Math_Round(x: f64) -> f64 {
     scalar::round(x)
 }
 
+/// Maps the magnitude of `x` into the range from `0.0` toward `1.0`.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_ExpMap(x: f64, p: f64) -> f64 {
+    scalar::exp_map(x, p)
+}
+
+/// Maps the magnitude of `x` exponentially while preserving its sign.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_ExpMapSigned(x: f64, p: f64) -> f64 {
+    scalar::exp_map_signed(x, p)
+}
+
+/// Maps the magnitude of `x` exponentially using a fixed exponent of `1.0`.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_ExpMap1(x: f64) -> f64 {
+    scalar::exp_map1(x)
+}
+
+/// Maps `x` exponentially using a fixed exponent of `1.0` while preserving its sign.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_ExpMap1Signed(x: f64) -> f64 {
+    scalar::exp_map1_signed(x)
+}
+
+/// Maps the magnitude of `x` exponentially using a fixed exponent of `2.0`.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_ExpMap2(x: f64) -> f64 {
+    scalar::exp_map2(x)
+}
+
+/// Maps `x` exponentially using a fixed exponent of `2.0` while preserving its sign.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_ExpMap2Signed(x: f64) -> f64 {
+    scalar::exp_map2_signed(x)
+}
+
+/// Raises the magnitude of `x` to `p` while preserving the sign of `x`.
+#[unsafe(no_mangle)]
+pub extern "C" fn Math_PowSigned(x: f64, p: f64) -> f64 {
+    scalar::pow_signed(x, p)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -75,5 +117,25 @@ mod tests {
 
         assert_eq!(Math_Round(1.5), 2.0);
         assert_eq!(Math_Round(-1.5), -1.0);
+    }
+
+    #[test]
+    fn forwards_general_exponential_mapping_operations() {
+        assert_eq!(Math_ExpMap(1.0, 2.0), scalar::exp_map(1.0, 2.0));
+        assert_eq!(
+            Math_ExpMapSigned(-1.0, 2.0),
+            scalar::exp_map_signed(-1.0, 2.0)
+        );
+    }
+
+    #[test]
+    fn forwards_specialized_exponential_mapping_operations() {
+        assert_eq!(Math_ExpMap1(1.0), scalar::exp_map1(1.0));
+        assert_eq!(Math_ExpMap1Signed(-1.0), scalar::exp_map1_signed(-1.0));
+
+        assert_eq!(Math_ExpMap2(1.0), scalar::exp_map2(1.0));
+        assert_eq!(Math_ExpMap2Signed(-1.0), scalar::exp_map2_signed(-1.0));
+
+        assert_eq!(Math_PowSigned(-4.0, 0.5), -2.0);
     }
 }
