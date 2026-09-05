@@ -66,7 +66,7 @@ pub const fn sign(x: f64) -> f64 {
     }
 }
 
-/// Rounds `x`
+/// Rounds `x` to the nearest integer, with halfway values rounded toward positive infinity.
 pub fn round(x: f64) -> f64 {
     (x + 0.5).floor()
 }
@@ -132,7 +132,7 @@ mod tests {
     }
 
     #[test]
-    fn rounds_using_libphx_behavior() {
+    fn rounds_halfway_values_toward_positive_infinity() {
         assert_eq!(round(1.4), 1.0);
         assert_eq!(round(1.5), 2.0);
         assert_eq!(round(-1.4), -1.0);

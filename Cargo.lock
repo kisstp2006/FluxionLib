@@ -3,22 +3,22 @@
 version = 4
 
 [[package]]
-name = "flux-math"
-version = "0.1.0"
-
-[[package]]
-name = "libflux"
+name = "fluxionlib"
 version = "0.1.0"
 dependencies = [
- "flux-math",
+ "fluxionlib-math",
 ]
 
 [[package]]
-name = "libflux-capi"
+name = "fluxionlib-capi"
 version = "0.1.0"
 dependencies = [
- "libflux",
+ "fluxionlib",
 ]
+
+[[package]]
+name = "fluxionlib-math"
+version = "0.1.0"
 
 [[package]]
 name = "sandbox"

@@ -25,4 +25,4 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
-Write-Host "LibFlux verification completed successfully."
+Write-Host "FluxionLib verification completed successfully."

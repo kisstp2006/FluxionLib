@@ -16,9 +16,9 @@ The project is in early development and is not ready for production use.
 
 ## Current workspace
 
-- `flux-math`: scalar, bitwise, and future multidimensional mathematics.
-- `libflux`: public Rust facade for the engine.
-- `libflux-capi`: C-compatible dynamic library interface.
+- `fluxionlib-math`: scalar, bitwise, and future multidimensional mathematics.
+- `fluxionlib`: public Rust facade for the engine.
+- `fluxionlib-capi`: C-compatible dynamic library interface.
 - `sandbox`: executable used for examples and development experiments.
 
 Additional subsystem crates will be introduced only when their implementation begins.

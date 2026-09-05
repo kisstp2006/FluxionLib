@@ -11,4 +11,4 @@ cargo test --workspace
 echo "Running Clippy..."
 cargo clippy --workspace --all-targets -- -D warnings
 
-echo "LibFlux verification completed successfully."
+echo "FluxionLib verification completed successfully."

@@ -1,8 +1,8 @@
 [workspace]
 members = [
-    "crates/flux-math",
-    "crates/libflux",
-    "crates/libflux-capi",
+    "crates/fluxionlib-math",
+    "crates/fluxionlib",
+    "crates/fluxionlib-capi",
     "apps/sandbox",
 ]
 resolver = "3"

@@ -1,6 +1,6 @@
 //! C-compatible scalar mathematics API.
 
-use libflux::math::scalar;
+use fluxionlib::math::scalar;
 
 /// Restricts `x` to the inclusive range between `a` and `b`.
 #[unsafe(no_mangle)]
@@ -44,7 +44,7 @@ pub extern "C" fn Math_Sign(x: f64) -> f64 {
     scalar::sign(x)
 }
 
-/// Rounds `x` using the original LibPHX rounding behavior.
+/// Rounds `x` to the nearest integer, with halfway values rounded toward positive infinity.
 #[unsafe(no_mangle)]
 pub extern "C" fn Math_Round(x: f64) -> f64 {
     scalar::round(x)

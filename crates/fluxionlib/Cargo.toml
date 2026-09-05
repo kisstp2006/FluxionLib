@@ -1,13 +1,10 @@
 [package]
-name = "libflux-capi"
+name = "fluxionlib"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 authors.workspace = true
 license.workspace = true
 
-[lib]
-crate-type = ["cdylib", "rlib"]
-
 [dependencies]
-libflux = { path = "../libflux" }
+fluxionlib-math = { path = "../fluxionlib-math" }

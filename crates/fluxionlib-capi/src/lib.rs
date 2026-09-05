@@ -1,10 +1,10 @@
-//! C-compatible interface for LibFlux.
+//! C-compatible interface for FluxionLib.
 
 #![allow(non_snake_case)]
 
 mod math;
 
-use libflux::math::bit;
+use fluxionlib::math::bit;
 
 /// Performs a bitwise AND operation on two 32-bit unsigned integers.
 #[unsafe(no_mangle)]
