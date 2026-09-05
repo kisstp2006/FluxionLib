@@ -1,14 +1,13 @@
-# LibFlux
+# [**FluxionLib**](https://github.com/kisstp2006/FluxionLib)
 
-LibFlux is a work-in-progress game engine written in Rust. It is inspired by
-[LibPHX](https://github.com/JoshParnell/libphx) and aims to preserve its focused,
-library-first design while using a modern, modular Rust workspace.
+FluxionLib is a work-in-progress game engine written in Rust. It uses a focused,
+library-first design built as a modern, modular Rust workspace.
 
 The project is in early development and is not ready for production use.
 
 ## Design goals
 
-- Provide the same broad engine capabilities as LibPHX.
+- Provide a focused collection of reusable game-engine capabilities.
 - Keep application control flow outside the engine.
 - Organize major engine subsystems as separate Rust crates.
 - Expose an idiomatic Rust API and an optional C-compatible API.
@@ -57,14 +56,8 @@ Run the same checks on Linux:
 ./scripts/verify.sh
 ```
 
-## Origin
-
-LibFlux is an independent Rust project based on the architecture and behavior of the
-public-domain LibPHX game engine. LibFlux is not affiliated with the original LibPHX
-or Limit Theory projects.
-
 ## License
 
-LibFlux is available under the [MIT No Attribution](LICENSE) license (`MIT-0`).
+FluxionLib is available under the [MIT No Attribution](LICENSE) license (`MIT-0`).
 
 Attribution is appreciated, but not required.
